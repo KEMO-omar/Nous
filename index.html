@@ -298,124 +298,133 @@
     </footer>
 
     <div class="toast" id="toast">تم النسخ بنجاح!</div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getFirestore, doc, onSnapshot, updateDoc, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-        import { getFirestore, doc, onSnapshot, updateDoc, increment, setDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+    const firebaseConfig = {
+        apiKey: "AIzaSyByQP42vfyZjfP8HU5SA76GKuZoH98T85o",
+        authDomain: "ktaba-f5100.firebaseapp.com",
+        projectId: "ktaba-f5100",
+        storageBucket: "ktaba-f5100.firebasestorage.app",
+        messagingSenderId: "330263583347",
+        appId: "1:330263583347:web:7e0b09bad10d1f688be806"
+    };
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyByQP42vfyZjfP8HU5SA76GKuZoH98T85o",
-            authDomain: "ktaba-f5100.firebaseapp.com",
-            projectId: "ktaba-f5100",
-            storageBucket: "ktaba-f5100.firebasestorage.app",
-            messagingSenderId: "330263583347",
-            appId: "1:330263583347:web:7e0b09bad10d1f688be806"
-        };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const statsRef = doc(db, "statistics", "april_time");
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const statsRef = doc(db, "statistics", "april_time");
+    // تحديث العداد لايف في الصفحة
+    onSnapshot(statsRef, (snapshot) => {
+        if (snapshot.exists()) {
+            document.getElementById('globalCount').innerText = snapshot.data().totalChars.toLocaleString();
+        } else {
+            // إنشاء المستند لو مش موجود بقيمة مبدئية
+            setDoc(statsRef, { totalChars: 0 }, { merge: true });
+        }
+    });
 
-        // Firebase Sync
-        onSnapshot(statsRef, (doc) => {
-            if (doc.exists()) {
-                document.getElementById('globalCount').innerText = doc.data().totalChars.toLocaleString();
-            } else {
-                setDoc(statsRef, { totalChars: 0 });
+    const boldMap = {"a":"𝗮","b":"𝗯","c":"𝗰","d":"𝗱","e":"𝗲","f":"𝗳","g":"𝗴","h":"𝗵","i":"𝗶","j":"𝗷","k":"𝗸","l":"𝗹","m":"𝗺","n":"𝗻","o":"𝗼","p":"𝗽","q":"𝗾","r":"𝗿","s":"𝘀","t":"𝘁","u":"𝘂","v":"𝘃","w":"𝘄","x":"𝘅","y":"𝘆","z":"𝘇"};
+
+    window.toggleOpt = (el) => el.classList.toggle('active');
+
+    window.generateBlank = () => {
+        document.getElementById('inputText').value = "\u3164";
+        showToast("تم توليد رمز الرسالة المخفية");
+    };
+
+    window.clearInput = () => document.getElementById('inputText').value = "";
+
+    window.processText = async () => {
+        const text = document.getElementById('inputText').value;
+        const count = parseInt(document.getElementById('repeatCount').value) || 0;
+        const sep = document.getElementById('separator').value.replace('\\n', '\n');
+        
+        if(!text || count <= 0) return;
+
+        let result = "";
+        for(let i = 1; i <= count; i++) {
+            let currentText = text;
+            if(document.getElementById('optUppercase').classList.contains('active')) currentText = currentText.toUpperCase();
+            if(document.getElementById('optReverse').classList.contains('active')) currentText = currentText.split('').reverse().join('');
+            if(document.getElementById('optBold').classList.contains('active')) {
+                currentText = currentText.split('').map(char => boldMap[char.toLowerCase()] || char).join('');
             }
-        });
+            let line = document.getElementById('optNumbering').classList.contains('active') ? `${i}- ${currentText}` : currentText;
+            result += line + (i === count ? "" : sep);
+        }
 
-        // Fancy Font Map (Simple Bold)
-        const boldMap = {"a":"𝗮","b":"𝗯","c":"𝗰","d":"𝗱","e":"𝗲","f":"𝗳","g":"𝗴","h":"𝗵","i":"𝗶","j":"𝗷","k":"𝗸","l":"𝗹","m":"𝗺","n":"𝗻","o":"𝗼","p":"𝗽","q":"𝗾","r":"𝗿","s":"𝘀","t":"𝘁","u":"𝘂","v":"𝘃","w":"𝘄","x":"𝘅","y":"𝘆","z":"𝘇"};
+        document.getElementById('resultText').value = result;
+        const finalLen = result.length;
+        document.getElementById('charCount').innerText = finalLen.toLocaleString();
 
-        window.toggleOpt = (el) => el.classList.toggle('active');
+        // إظهار تنبيه الوقت
+        const timeSaved = Math.round((finalLen / 10));
+        if(timeSaved > 5) {
+            const notice = document.getElementById('timeNotice');
+            notice.innerText = `عشان وقتك مش ببلاش احنا وفرنا عليك ${timeSaved} ثانيه`;
+            notice.style.display = 'block';
+        }
 
-        window.generateBlank = () => {
-            document.getElementById('inputText').value = "\u3164";
-            showToast("تم توليد رمز الرسالة المخفية");
-        };
-
-        window.clearInput = () => document.getElementById('inputText').value = "";
-
-        window.processText = async () => {
-            const text = document.getElementById('inputText').value;
-            const count = parseInt(document.getElementById('repeatCount').value);
-            const sep = document.getElementById('separator').value.replace('\\n', '\n');
-            
-            if(!text) return;
-
-            let result = "";
-            for(let i = 1; i <= count; i++) {
-                let currentText = text;
-                
-                if(document.getElementById('optUppercase').classList.contains('active')) currentText = currentText.toUpperCase();
-                if(document.getElementById('optReverse').classList.contains('active')) currentText = currentText.split('').reverse().join('');
-                if(document.getElementById('optBold').classList.contains('active')) {
-                    currentText = currentText.split('').map(char => boldMap[char.toLowerCase()] || char).join('');
+        // --- تحديث الفايربيز المضمون ---
+        try {
+            // بنجرب نحدث لو المستند موجود، لو مش موجود بنعمل setDoc
+            await updateDoc(statsRef, { 
+                totalChars: increment(finalLen) 
+            }).catch(async (err) => {
+                if (err.code === 'not-found') {
+                    await setDoc(statsRef, { totalChars: finalLen }, { merge: true });
                 }
-                
-                let line = document.getElementById('optNumbering').classList.contains('active') ? `${i}- ${currentText}` : currentText;
-                result += line + (i === count ? "" : sep);
-            }
-
-            document.getElementById('resultText').value = result;
-            const finalLen = result.length;
-            document.getElementById('charCount').innerText = finalLen.toLocaleString();
-
-            // Time Saved Calculation (100 chars = 10 sec saved approx)
-            const timeSaved = Math.round((finalLen / 10));
-            if(timeSaved > 5) {
-                const notice = document.getElementById('timeNotice');
-                notice.innerText = ` عشان وقتك مش ببلاش احنا وفرنا عليك ${timeSaved} ثانيه `;
-                notice.style.display = 'block';
-            }
-
-            try { await updateDoc(statsRef, { totalChars: increment(finalLen) }); } catch(e){}
-        };
-
-        window.copyText = () => {
-            const res = document.getElementById('resultText');
-            if(!res.value) return;
-            res.select();
-            document.execCommand('copy');
-            showToast("تم النسخ للمحافظة");
-        };
-
-        window.shareWhatsApp = () => {
-            const text = document.getElementById('resultText').value;
-            if(!text) return;
-            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-        };
-
-        // Templates System
-        window.saveAsTemplate = () => {
-            const text = document.getElementById('inputText').value;
-            if(!text) return;
-            let templates = JSON.parse(localStorage.getItem('nous_templates') || '[]');
-            if(!templates.includes(text)) {
-                templates.push(text);
-                localStorage.setItem('nous_templates', JSON.stringify(templates));
-                renderTemplates();
-                showToast("تم حفظ القالب");
-            }
-        };
-
-        function renderTemplates() {
-            const container = document.getElementById('templatesList');
-            const templates = JSON.parse(localStorage.getItem('nous_templates') || '[]');
-            container.innerHTML = templates.map(t => `<div class="template-chip" onclick="useTemplate('${t}')">${t.substring(0,15)}...</div>`).join('');
+            });
+        } catch(e) {
+            console.log("Sync Error:", e);
         }
+    };
 
-        window.useTemplate = (t) => document.getElementById('inputText').value = t;
+    window.copyText = () => {
+        const res = document.getElementById('resultText');
+        if(!res.value) return;
+        res.select();
+        document.execCommand('copy');
+        showToast("تم النسخ للمحافظة");
+    };
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.innerText = msg;
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 2500);
+    window.shareWhatsApp = () => {
+        const text = document.getElementById('resultText').value;
+        if(!text) return;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    };
+
+    window.saveAsTemplate = () => {
+        const text = document.getElementById('inputText').value;
+        if(!text) return;
+        let templates = JSON.parse(localStorage.getItem('nous_templates') || '[]');
+        if(!templates.includes(text)) {
+            templates.push(text);
+            localStorage.setItem('nous_templates', JSON.stringify(templates));
+            renderTemplates();
+            showToast("تم حفظ القالب");
         }
+    };
 
-        renderTemplates();
-    </script>
+    function renderTemplates() {
+        const container = document.getElementById('templatesList');
+        const templates = JSON.parse(localStorage.getItem('nous_templates') || '[]');
+        container.innerHTML = templates.map(t => `<div class="template-chip" onclick="useTemplate('${t}')">${t.substring(0,15)}...</div>`).join('');
+    }
+
+    window.useTemplate = (t) => document.getElementById('inputText').value = t;
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 2500);
+    }
+
+    renderTemplates();
+</script>
+
 </body>
 </html>
