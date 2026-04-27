@@ -360,7 +360,7 @@
         document.getElementById('charCount').innerText = finalLen.toLocaleString();
 
         // إظهار تنبيه الوقت
-        const timeSaved = Math.round((finalLen / 10));
+        const timeSaved = Math.round((finalLen));
         if(timeSaved > 5) {
             const notice = document.getElementById('timeNotice');
             notice.innerText = `عشان وقتك مش ببلاش احنا وفرنا عليك ${timeSaved} ثانيه`;
