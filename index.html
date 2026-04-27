@@ -5,20 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مكرر النصوص الاحترافي | KAREEM OMAR</title>
     <meta name="description" content="Nous - أسرع وأسهل أداة لتكرار النصوص وزخرفتها. كرر جملك آلاف المرات بضغطة زر، أضف ترقيمًا، وشاركها مباشرة على واتساب. صمم بواسطة كريم عمر.">
-<meta name="keywords" content="مكرر نصوص, تكرار الكلام, زخرفة نصوص, كريم عمر, Nous, Text Repeater, زخرفة واتساب, تكرار جمل">
-<meta name="author" content="Kareem Omar">
-<meta name="robots" content="index, follow">
+    <meta name="keywords" content="مكرر نصوص, تكرار الكلام, زخرفة نصوص, كريم عمر, Nous, Text Repeater, زخرفة واتساب, تكرار جمل">
+    <meta name="author" content="Kareem Omar">
+    <meta name="robots" content="index, follow">
 
-<meta property="og:title" content="Nous | مكرر النصوص الاحترافي">
-<meta property="og:description" content="أداة ذكية لتكرار النصوص وتنسيقها بسرعة فائقة. جربها الآن!">
-<meta property="og:image" content="https://kemo-omar.github.io/Kareem/images/og-image.jpg"> <meta property="og:url" content="https://kemo-omar.github.io/Nous/">
-<meta property="og:type" content="website">
+    <meta property="og:title" content="Nous | مكرر النصوص الاحترافي">
+    <meta property="og:description" content="أداة ذكية لتكرار النصوص وتنسيقها بسرعة فائقة. جربها الآن!">
+    <meta property="og:image" content="https://kemo-omar.github.io/Kareem/images/og-image.jpg"> 
+    <meta property="og:url" content="https://kemo-omar.github.io/Nous/">
+    <meta property="og:type" content="website">
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Nous | مكرر النصوص الاحترافي">
-<meta name="twitter:description" content="كرر نصوصك بضغطة زر واحدة مع مميزات متقدمة.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nous | مكرر النصوص الاحترافي">
+    <meta name="twitter:description" content="كرر نصوصك بضغطة زر واحدة مع مميزات متقدمة.">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary-color: #6366f1;
@@ -26,6 +29,7 @@
             --card-bg: #1e293b;
             --text-color: #f8fafc;
             --accent-color: #10b981;
+            --danger-color: #ef4444;
         }
 
         body {
@@ -42,171 +46,254 @@
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
         }
 
-        h1 { text-align: center; color: var(--primary-color); margin-bottom: 10px; }
+        h1 { text-align: center; color: var(--primary-color); margin-bottom: 15px; font-weight: 700; }
+        
         .stats-bar {
             background: rgba(99, 102, 241, 0.1);
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 12px;
             text-align: center;
-            margin-bottom: 20px;
-            border: 1px solid var(--primary-color);
+            margin-bottom: 25px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            font-size: 0.9rem;
         }
 
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .input-group { margin-bottom: 20px; position: relative; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #94a3b8; }
         
         textarea, input, select {
             width: 100%;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 12px;
             border: 1px solid #334155;
             background: #0f172a;
             color: white;
             box-sizing: border-box;
             font-size: 16px;
+            transition: 0.3s;
         }
+
+        textarea:focus { border-color: var(--primary-color); outline: none; }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 13px;
+            background: #334155;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            color: white;
+            transition: 0.2s;
+        }
+
+        .btn-small:hover { background: #475569; }
 
         .controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 20px;
             margin-bottom: 20px;
         }
 
-        .options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
         }
 
         .option-item {
             background: #334155;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 12px;
+            border-radius: 12px;
             cursor: pointer;
+            text-align: center;
             font-size: 14px;
             transition: 0.3s;
+            border: 2px solid transparent;
         }
 
-        .option-item.active { background: var(--primary-color); }
+        .option-item.active { 
+            background: rgba(99, 102, 241, 0.2); 
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
 
-        button {
+        button.main-btn {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             border: none;
-            border-radius: 12px;
-            background: var(--primary-color);
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary-color), #4f46e5);
             color: white;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
         }
 
-        button:hover { opacity: 0.9; transform: translateY(-2px); }
+        button.main-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6); }
 
-        .output-area {
-            margin-top: 20px;
-            position: relative;
+        .time-saved {
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--accent-color);
+            text-align: center;
+            display: none;
+        }
+
+        .templates-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+        }
+
+        .templates-list {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .template-chip {
+            background: #1e293b;
+            border: 1px solid #475569;
+            padding: 6px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 13px;
         }
 
         #resultText {
-            height: 200px;
+            height: 180px;
             background: #020617;
             border: 1px dashed var(--primary-color);
+            margin-top: 10px;
+            font-family: monospace;
         }
 
         .action-btns {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
-        .btn-secondary { background: #475569; font-size: 14px; }
-        .btn-whatsapp { background: #25d366; font-size: 14px; }
+        .btn-action { padding: 12px; border: none; border-radius: 10px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; transition: 0.2s; text-align: center; }
+        .btn-copy { background: #475569; }
+        .btn-wa { background: #128c7e; }
+        .btn-save { background: var(--accent-color); }
 
         footer {
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
             font-size: 14px;
             color: #94a3b8;
         }
 
-        footer a { color: var(--primary-color); text-decoration: none; margin: 0 10px; }
+        footer a { color: var(--primary-color); text-decoration: none; margin: 0 10px; transition: 0.3s; }
+        footer a:hover { text-decoration: underline; }
 
         .toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             background: var(--accent-color);
-            padding: 10px 20px;
-            border-radius: 8px;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
             display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>مكرر النصوص الذكي 🚀</h1>
+        <h1>NOUS</h1>
         
         <div class="stats-bar">
-            إجمالي الحروف التي وُلدت بواسطة المستخدمين: <span id="globalCount">جارِ التحميل...</span> حرف
+            <i class="fas fa-chart-line"></i> إجمالي الحروف المولدة عالمياً: <span id="globalCount">...</span>
         </div>
 
         <div class="input-group">
-            <label>اكتب النص هنا:</label>
-            <textarea id="inputText" placeholder="مثال: سبحان الله وبحمده"></textarea>
+            <label><i class="fas fa-pen"></i> النص المراد تكراره</label>
+            <textarea id="inputText" placeholder="اكتب هنا ما تشاء..."></textarea>
+            
+            <div class="quick-actions" style="margin-top: 10px;">
+                <button class="btn-small" onclick="generateBlank()"><i class="fas fa-ghost"></i> رسالة مخفية</button>
+                <button class="btn-small" onclick="clearInput()"><i class="fas fa-trash"></i> مسح</button>
+            </div>
         </div>
 
         <div class="controls">
             <div class="input-group">
-                <label>عدد التكرار:</label>
+                <label><i class="fas fa-redo"></i> عدد المرات</label>
                 <input type="number" id="repeatCount" value="10" min="1">
             </div>
             <div class="input-group">
-                <label>الفاصل بين الجمل:</label>
+                <label><i class="fas fa-arrows-alt-h"></i> الفاصل</label>
                 <select id="separator">
                     <option value="\n">سطر جديد</option>
                     <option value=" ">مسافة</option>
-                    <option value=" - ">شرطة (-)</option>
-                    <option value=" * ">نجمة (*)</option>
+                    <option value=" - ">شرطة</option>
+                    <option value=" * ">نجمة</option>
+                    <option value="">بدون فاصل</option>
                 </select>
             </div>
         </div>
 
-        <div class="options">
-            <div class="option-item" onclick="this.classList.toggle('active')" id="optNumbering">إضافة ترقيم</div>
-            <div class="option-item" onclick="this.classList.toggle('active')" id="optUppercase">حروف كبيرة (EN)</div>
-            <div class="option-item" onclick="this.classList.toggle('active')" id="optReverse">عكس النص</div>
+        <div class="options-grid">
+            <div class="option-item" onclick="toggleOpt(this)" id="optNumbering"><i class="fas fa-list-ol"></i> ترقيم</div>
+            <div class="option-item" onclick="toggleOpt(this)" id="optUppercase"><i class="fas fa-font"></i> CAPITAL</div>
+            <div class="option-item" onclick="toggleOpt(this)" id="optReverse"><i class="fas fa-exchange-alt"></i> عكس النص</div>
+            <div class="option-item" onclick="toggleOpt(this)" id="optBold"><i class="fas fa-bold"></i> خط عريض</div>
         </div>
 
-        <button onclick="processText()">توليد وتكرار النص ✨</button>
+        <button class="main-btn" onclick="processText()"><i class="fas fa-magic"></i> تـولـيـد النـص</button>
+        
+        <div id="timeNotice" class="time-saved"></div>
 
         <div class="output-area">
-            <label>النتيجة (عدد الحروف: <span id="charCount">0</span>):</label>
+            <label style="margin-top: 20px;"><i class="fas fa-poll-h"></i> النتيجة (حروف: <span id="charCount">0</span>)</label>
             <textarea id="resultText" readonly></textarea>
             
             <div class="action-btns">
-                <button class="btn-secondary" onclick="copyText()">نسخ النص 📋</button>
-                <button class="btn-whatsapp" onclick="shareWhatsApp()">إرسال للواتساب 🟢</button>
+                <button class="btn-action btn-copy" onclick="copyText()"><i class="fas fa-copy"></i> نسخ</button>
+                <button class="btn-action btn-wa" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i> واتساب</button>
+                <button class="btn-action btn-save" onclick="saveAsTemplate()"><i class="fas fa-bookmark"></i> حفظ</button>
             </div>
+        </div>
+
+        <div class="templates-section">
+            <label><i class="fas fa-history"></i> قوالبك المحفوظة</label>
+            <div id="templatesList" class="templates-list">
+                </div>
         </div>
     </div>
 
     <footer>
-        <p>صمم بواسطة <b>كريم عمر</b></p>
+        <p>صمم بكل إتقان بواسطة <b>كريم عمر</b></p>
         <p>
-            <a href="https://kemo-omar.github.io/Kareem/" target="_blank">معرض أعمالي</a> | 
-            <a href="https://kemo-omar.github.io/SOHOORNA/" target="_blank">مشروع سحورنا</a>
+            <a href="https://kemo-omar.github.io/Kareem/" target="_blank"><i class="fas fa-briefcase"></i> أعمالي</a>
+            <a href="https://kemo-omar.github.io/SOHOORNA/" target="_blank"><i class="fas fa-utensils"></i> سحورنا</a>
         </p>
     </footer>
 
@@ -227,27 +314,35 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
-        // المرجع لمستند الإحصائيات (سنسميه april_stats)
         const statsRef = doc(db, "statistics", "april_time");
 
-        // استماع للتحديثات الحية من فايربيز
+        // Firebase Sync
         onSnapshot(statsRef, (doc) => {
             if (doc.exists()) {
                 document.getElementById('globalCount').innerText = doc.data().totalChars.toLocaleString();
             } else {
-                // إذا لم يكن المستند موجوداً، نقوم بإنشائه
                 setDoc(statsRef, { totalChars: 0 });
             }
         });
 
-        // وظيفة المعالجة الأساسية
+        // Fancy Font Map (Simple Bold)
+        const boldMap = {"a":"𝗮","b":"𝗯","c":"𝗰","d":"𝗱","e":"𝗲","f":"𝗳","g":"𝗴","h":"𝗵","i":"𝗶","j":"𝗷","k":"𝗸","l":"𝗹","m":"𝗺","n":"𝗻","o":"𝗼","p":"𝗽","q":"𝗾","r":"𝗿","s":"𝘀","t":"𝘁","u":"𝘂","v":"𝘃","w":"𝘄","x":"𝘅","y":"𝘆","z":"𝘇"};
+
+        window.toggleOpt = (el) => el.classList.toggle('active');
+
+        window.generateBlank = () => {
+            document.getElementById('inputText').value = "\u3164";
+            showToast("تم توليد رمز الرسالة المخفية");
+        };
+
+        window.clearInput = () => document.getElementById('inputText').value = "";
+
         window.processText = async () => {
             const text = document.getElementById('inputText').value;
             const count = parseInt(document.getElementById('repeatCount').value);
             const sep = document.getElementById('separator').value.replace('\\n', '\n');
             
-            if(!text) return alert("اكتب حاجة الأول يا كيمو!");
+            if(!text) return;
 
             let result = "";
             for(let i = 1; i <= count; i++) {
@@ -255,39 +350,72 @@
                 
                 if(document.getElementById('optUppercase').classList.contains('active')) currentText = currentText.toUpperCase();
                 if(document.getElementById('optReverse').classList.contains('active')) currentText = currentText.split('').reverse().join('');
+                if(document.getElementById('optBold').classList.contains('active')) {
+                    currentText = currentText.split('').map(char => boldMap[char.toLowerCase()] || char).join('');
+                }
                 
                 let line = document.getElementById('optNumbering').classList.contains('active') ? `${i}- ${currentText}` : currentText;
-                
                 result += line + (i === count ? "" : sep);
             }
 
             document.getElementById('resultText').value = result;
-            document.getElementById('charCount').innerText = result.length;
+            const finalLen = result.length;
+            document.getElementById('charCount').innerText = finalLen.toLocaleString();
 
-            // تحديث فايربيز (زيادة إجمالي الحروف)
-            try {
-                await updateDoc(statsRef, {
-                    totalChars: increment(result.length)
-                });
-            } catch (e) {
-                console.error("Error updating stats: ", e);
+            // Time Saved Calculation (100 chars = 10 sec saved approx)
+            const timeSaved = Math.round((finalLen / 10));
+            if(timeSaved > 5) {
+                const notice = document.getElementById('timeNotice');
+                notice.innerText = ` عشان وقتك مش ببلاش احنا وفرنا عليك ${timeSaved} ثانيه `;
+                notice.style.display = 'block';
             }
+
+            try { await updateDoc(statsRef, { totalChars: increment(finalLen) }); } catch(e){}
         };
 
-        // وظائف إضافية
         window.copyText = () => {
             const res = document.getElementById('resultText');
+            if(!res.value) return;
             res.select();
             document.execCommand('copy');
-            const toast = document.getElementById('toast');
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 2000);
+            showToast("تم النسخ للمحافظة");
         };
 
         window.shareWhatsApp = () => {
             const text = document.getElementById('resultText').value;
+            if(!text) return;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         };
+
+        // Templates System
+        window.saveAsTemplate = () => {
+            const text = document.getElementById('inputText').value;
+            if(!text) return;
+            let templates = JSON.parse(localStorage.getItem('nous_templates') || '[]');
+            if(!templates.includes(text)) {
+                templates.push(text);
+                localStorage.setItem('nous_templates', JSON.stringify(templates));
+                renderTemplates();
+                showToast("تم حفظ القالب");
+            }
+        };
+
+        function renderTemplates() {
+            const container = document.getElementById('templatesList');
+            const templates = JSON.parse(localStorage.getItem('nous_templates') || '[]');
+            container.innerHTML = templates.map(t => `<div class="template-chip" onclick="useTemplate('${t}')">${t.substring(0,15)}...</div>`).join('');
+        }
+
+        window.useTemplate = (t) => document.getElementById('inputText').value = t;
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 2500);
+        }
+
+        renderTemplates();
     </script>
 </body>
 </html>
